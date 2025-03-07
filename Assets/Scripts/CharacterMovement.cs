@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -10,6 +11,13 @@ public class CharacterMovement : MonoBehaviour
     private Rigidbody rb;
     private bool isGrounded;
     public AudioSource walkingSound;
+
+    PhotonView PV;
+
+    private void Awake()
+    {
+        PV = GetComponent<PhotonView>();
+    }
 
     void Start()
     {
@@ -53,6 +61,7 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
+        if (PV.IsMine) return;
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             Jump();
