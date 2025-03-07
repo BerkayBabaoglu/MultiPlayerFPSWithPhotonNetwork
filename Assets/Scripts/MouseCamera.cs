@@ -19,19 +19,19 @@ public class MouseCamera : MonoBehaviourPunCallbacks
     {
         if (!PV.IsMine)
         {
-            GetComponent<Camera>().enabled = false; // Kamerayý kapat
-            GetComponent<AudioListener>().enabled = false; // Ses dinleyicisini de kapat
+            GetComponent<Camera>().enabled = false; 
+            GetComponent<AudioListener>().enabled = false; 
             Destroy(this);
             return;
         }
 
-        Cursor.lockState = CursorLockMode.Locked; // Ýmleci ekranda gizler ve kilitler
+        Cursor.lockState = CursorLockMode.Locked; 
         Cursor.visible = false;
     }
 
     void Update()
     {
-        if (PV.IsMine) // Sadece kendi karakterinin kamerasýný kontrol et
+        if (PV.IsMine)
         {
             CameraControl();
         }
@@ -43,9 +43,9 @@ public class MouseCamera : MonoBehaviourPunCallbacks
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Yukarý-aþaðý dönüþ sýnýrý
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f); 
 
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f); // Kamerayý yukarý-aþaðý döndür
-        playerBody.Rotate(Vector3.up * mouseX); // Oyuncuyu sola-saða döndür
+        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f); 
+        playerBody.Rotate(Vector3.up * mouseX); 
     }
 }

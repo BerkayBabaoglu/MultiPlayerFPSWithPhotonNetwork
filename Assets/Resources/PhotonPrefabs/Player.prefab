@@ -1701,7 +1701,6 @@ MonoBehaviour:
   range: 100
   fpsCam: {fileID: 8922511710135463146}
   muzzleFlashVFX: {fileID: 8338583605563993723}
-  muzzleFlashDuration: 0.05
   impactEffect: {fileID: 5801186041725840205, guid: dcb1ddc0edceb06408e7707b3d17317b, type: 3}
   shootAudio: {fileID: 6260319769310890127}
 --- !u!95 &2989097651760428048

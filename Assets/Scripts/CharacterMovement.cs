@@ -19,9 +19,9 @@ public class CharacterMovement : MonoBehaviourPunCallbacks
 
         if (!PV.IsMine)
         {
-            // Eðer bu nesne yerel oyuncuya ait deðilse, kontrolünü kapat
+            
             GetComponent<CharacterMovement>().enabled = false;
-            rb.isKinematic = true; // Fizik motorunu devre dýþý býrak
+            rb.isKinematic = true; 
         }
     }
 

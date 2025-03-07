@@ -9,7 +9,7 @@ public class Gun : MonoBehaviourPunCallbacks
     public float range = 100f;
 
     public Camera fpsCam;
-    public VisualEffect muzzleFlashVFX; // VFX Component
+    public VisualEffect muzzleFlashVFX; 
     public VisualEffect impactEffect;
     public AudioSource shootAudio;
 
@@ -28,11 +28,11 @@ public class Gun : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (PV.IsMine) // Yerel oyuncu giriþleri dinler
+        if (PV.IsMine) 
         {
             if (Input.GetButtonDown("Fire1"))
             {
-                PV.RPC("Shoot", RpcTarget.All); // Atýþý tüm istemcilere gönder
+                PV.RPC("Shoot", RpcTarget.All); 
             }
         }
     }
