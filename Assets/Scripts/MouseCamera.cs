@@ -1,18 +1,43 @@
+using Photon.Pun;
 using UnityEngine;
 
-public class MouseCamera : MonoBehaviour
+public class MouseCamera : MonoBehaviourPunCallbacks
 {
     public float mouseSensitivity = 100f;
     public Transform playerBody;
 
     private float xRotation = 0f;
 
+    PhotonView PV;
+
+    private void Awake()
+    {
+        PV = GetComponent<PhotonView>();
+    }
+
     void Start()
     {
+        if (!PV.IsMine)
+        {
+            GetComponent<Camera>().enabled = false; // Kamerayý kapat
+            GetComponent<AudioListener>().enabled = false; // Ses dinleyicisini de kapat
+            Destroy(this);
+            return;
+        }
+
         Cursor.lockState = CursorLockMode.Locked; // Ýmleci ekranda gizler ve kilitler
+        Cursor.visible = false;
     }
 
     void Update()
+    {
+        if (PV.IsMine) // Sadece kendi karakterinin kamerasýný kontrol et
+        {
+            CameraControl();
+        }
+    }
+
+    void CameraControl()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
