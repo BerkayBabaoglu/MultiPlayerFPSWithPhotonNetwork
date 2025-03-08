@@ -521,6 +521,7 @@ GameObject:
   - component: {fileID: 3732775800120689540}
   - component: {fileID: 6230970515963126620}
   - component: {fileID: 694065934745854361}
+  - component: {fileID: 6376119468284856155}
   m_Layer: 0
   m_Name: WeaponCamera
   m_TagString: Untagged
@@ -660,6 +661,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivity: 100
   playerBody: {fileID: 7473144518145843601}
+--- !u!114 &6376119468284856155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2885151678293246256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2959143431326956462
 GameObject:
   m_ObjectHideFlags: 0
@@ -1280,6 +1303,8 @@ GameObject:
   - component: {fileID: 80981960734803109}
   - component: {fileID: 4548120463494494597}
   - component: {fileID: 1297170848544694730}
+  - component: {fileID: 2625428459040876547}
+  - component: {fileID: 6695086765637560060}
   m_Layer: 6
   m_Name: Rifle
   m_TagString: Untagged
@@ -1374,7 +1399,6 @@ MonoBehaviour:
   range: 100
   fpsCam: {fileID: 35963791072237278}
   muzzleFlashVFX: {fileID: 618378164482661815}
-  muzzleFlashDuration: 0.05
   impactEffect: {fileID: 5801186041725840205, guid: dcb1ddc0edceb06408e7707b3d17317b, type: 3}
   shootAudio: {fileID: 1297170848544694730}
 --- !u!95 &4548120463494494597
@@ -1494,6 +1518,45 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2625428459040876547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5929334562368538999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 6695086765637560060}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &6695086765637560060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5929334562368538999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &6191189936689551561
 GameObject:
   m_ObjectHideFlags: 0
@@ -2046,6 +2109,7 @@ GameObject:
   - component: {fileID: 7220158874334614455}
   - component: {fileID: 1276848096682846498}
   - component: {fileID: 5721152087532071730}
+  - component: {fileID: 5223241296639888694}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -2108,6 +2172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jumpForce: 5
+  crouchSpeed: 2
   animator: {fileID: 5292540173486522516}
   walkingSound: {fileID: 1276848096682846498}
 --- !u!54 &1508534577056314525
@@ -2274,10 +2339,27 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 5223241296639888694}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &5223241296639888694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8254968100690791880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &8318605888525141728
 GameObject:
   m_ObjectHideFlags: 0

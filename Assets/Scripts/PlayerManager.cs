@@ -1,6 +1,4 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -8,12 +6,12 @@ public class PlayerManager : MonoBehaviour
 {
     PhotonView PV;
 
-    private void Awake()
+    void Awake()
     {
         PV = GetComponent<PhotonView>();
     }
 
-    private void Start()
+    void Start()
     {
         if (PV.IsMine)
         {
@@ -23,6 +21,13 @@ public class PlayerManager : MonoBehaviour
 
     void CreateController()
     {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), Vector3.zero, Quaternion.identity);
+
+        GameObject player = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), Vector3.zero, Quaternion.identity);
+
+
+        if (player.GetComponent<PhotonView>().IsMine)
+        {
+            Debug.Log("Player instantiated successfully for this client.");
+        }
     }
 }
