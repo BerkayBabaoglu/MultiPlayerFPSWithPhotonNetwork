@@ -19,9 +19,8 @@ public class CharacterMovement : MonoBehaviourPunCallbacks
 
         if (!PV.IsMine)
         {
-            
             GetComponent<CharacterMovement>().enabled = false;
-            rb.isKinematic = true; 
+            rb.isKinematic = true;
         }
     }
 
@@ -42,25 +41,34 @@ public class CharacterMovement : MonoBehaviourPunCallbacks
 
     void Movement()
     {
-        if (Input.GetKey(KeyCode.W))
+        bool isMoving = Input.GetKey(KeyCode.W);
+
+        if (isMoving)
         {
-            animator.SetBool("isRunning", true);
+            Vector3 moveDirection = transform.forward * speed;
+            rb.velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
+
             if (!walkingSound.isPlaying)
             {
                 walkingSound.Play();
             }
-            Vector3 moveDirection = transform.forward * speed;
-            rb.velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
         }
         else
         {
-            animator.SetBool("isRunning", false);
             rb.velocity = new Vector3(0, rb.velocity.y, 0);
+
             if (walkingSound.isPlaying)
             {
                 walkingSound.Stop();
             }
         }
+
+        if (PV.IsMine)
+        {
+            PV.RPC("SyncAnimation", RpcTarget.Others, isMoving);
+        }
+
+        animator.SetBool("isRunning", isMoving);
     }
 
     void Update()
@@ -85,6 +93,7 @@ public class CharacterMovement : MonoBehaviourPunCallbacks
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         animator.SetBool("isJumping", true);
         isGrounded = false;
+        PV.RPC("SyncJumpAnimation", RpcTarget.Others, true);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -93,6 +102,19 @@ public class CharacterMovement : MonoBehaviourPunCallbacks
         {
             isGrounded = true;
             animator.SetBool("isJumping", false);
+            PV.RPC("SyncJumpAnimation", RpcTarget.Others, false);
         }
+    }
+
+    [PunRPC]
+    void SyncAnimation(bool isRunning) //animasyonlarý senkronize ederiz
+    {
+        animator.SetBool("isRunning", isRunning);
+    }
+
+    [PunRPC]
+    void SyncJumpAnimation(bool isJumping)
+    {
+        animator.SetBool("isJumping", isJumping);
     }
 }
