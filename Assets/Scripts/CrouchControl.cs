@@ -15,7 +15,6 @@ public class WeaponCameraCrouch : MonoBehaviour
     {
         if (weaponCamera == null)
         {
-            Debug.LogError("WeaponCamera atanmadý! Inspector'dan ekleyin.");
             return;
         }
 
@@ -23,8 +22,6 @@ public class WeaponCameraCrouch : MonoBehaviour
         float targetY = isCrouching ? crouchLocalY : defaultLocalY;
         float targetZ = isCrouching ? crouchLocalZ : defaultLocalZ;
 
-        // Debug ile deðiþimin olup olmadýðýný kontrol et
-        Debug.Log($"isCrouching: {isCrouching}, TargetY: {targetY}, TargetZ: {targetZ}, CurrentY: {weaponCamera.localPosition.y}, CurrentZ: {weaponCamera.localPosition.z}");
 
         Vector3 newLocalPosition = new Vector3(
             weaponCamera.localPosition.x,
@@ -32,7 +29,7 @@ public class WeaponCameraCrouch : MonoBehaviour
             targetZ
         );
 
-        // Yumuþak geçiþ için Lerp
+ 
         weaponCamera.localPosition = Vector3.Lerp(
             weaponCamera.localPosition,
             newLocalPosition,
