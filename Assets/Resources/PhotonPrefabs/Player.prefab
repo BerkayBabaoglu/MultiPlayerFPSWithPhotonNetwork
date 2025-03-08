@@ -522,6 +522,7 @@ GameObject:
   - component: {fileID: 6230970515963126620}
   - component: {fileID: 694065934745854361}
   - component: {fileID: 6376119468284856155}
+  - component: {fileID: 889798674868446377}
   m_Layer: 0
   m_Name: WeaponCamera
   m_TagString: Untagged
@@ -537,9 +538,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2885151678293246256}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000057741993, y: -0.000000029802319, z: -0.000000008381902, w: 1}
+  m_LocalRotation: {x: 0.00000006705522, y: -0.000000059604638, z: -0.0000000135041756, w: 1}
   m_LocalPosition: {x: 0.0007522867, y: 0.018101765, z: 0.0036756292}
-  m_LocalScale: {x: 0.0144094275, y: 0.014409429, z: 0.014409433}
+  m_LocalScale: {x: 0.014409427, y: 0.014409431, z: 0.014409431}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7473144518145843601}
@@ -683,6 +684,20 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &889798674868446377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2885151678293246256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89f622ff008a77e43af3933a57a1cef5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponCamera: {fileID: 2927493994243714715}
+  transitionSpeed: 10
 --- !u!1 &2959143431326956462
 GameObject:
   m_ObjectHideFlags: 0
@@ -2130,11 +2145,11 @@ Transform:
   m_LocalScale: {x: 69.399, y: 69.399, z: 69.399}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2927493994243714715}
   - {fileID: 4960800259018148262}
   - {fileID: 4634568779510469110}
   - {fileID: 1953430823501241927}
   - {fileID: 5176393310923902145}
+  - {fileID: 2927493994243714715}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5292540173486522516
