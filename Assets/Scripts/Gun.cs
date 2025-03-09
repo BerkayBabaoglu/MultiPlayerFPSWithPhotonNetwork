@@ -24,6 +24,8 @@ public class Gun : MonoBehaviourPunCallbacks
     {
         muzzleFlashVFX.Stop();
         shootAudio = GetComponent<AudioSource>();
+
+        shootAudio.Stop();
     }
 
     void Update()
@@ -60,6 +62,7 @@ public class Gun : MonoBehaviourPunCallbacks
 
     IEnumerator PlayVFX()
     {
+        
         muzzleFlashVFX.Play();
         shootAudio.Play();
 

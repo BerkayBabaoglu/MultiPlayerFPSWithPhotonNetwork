@@ -67,6 +67,7 @@ public class Launcher : MonoBehaviourPunCallbacks
             Destroy(child.gameObject);
         }
 
+
         for (int i=0;i < players.Count(); i++)
         {
             Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(players[i]);

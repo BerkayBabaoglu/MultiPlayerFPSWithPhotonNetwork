@@ -7,11 +7,14 @@ public class MenuManager : MonoBehaviour
     public static MenuManager Instance;
 
     [SerializeField] Menu[] menus;
+    public GameObject panel;
+    private bool isPaused = false;
 
     private void Awake()
     {
         Instance = this;
     }
+
 
     public void OpenMenu(string menuName)
     {
@@ -52,4 +55,5 @@ public class MenuManager : MonoBehaviour
     {
         menu.Close();
     }
+
 }
