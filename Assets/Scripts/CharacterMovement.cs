@@ -70,6 +70,7 @@ public class CharacterMovement : MonoBehaviourPunCallbacks
 
         if (isShift)
         {
+            walkingSound.Stop();
             animationState = moveZ > 0 ? "CrouchForward" : moveZ < 0 ? "CrouchBackward" :
                              moveX > 0 ? "CrouchRight" : moveX < 0 ? "CrouchLeft" : "CrouchIdle";
         }
