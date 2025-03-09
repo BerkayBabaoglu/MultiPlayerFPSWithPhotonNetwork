@@ -6,6 +6,8 @@ public class PlayerManager : MonoBehaviour
 {
     PhotonView PV;
 
+    GameObject player;
+
     void Awake()
     {
         PV = GetComponent<PhotonView>();
@@ -22,12 +24,16 @@ public class PlayerManager : MonoBehaviour
     void CreateController()
     {
 
-        GameObject player = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), Vector3.zero, Quaternion.identity);
-
-
-        if (player.GetComponent<PhotonView>().IsMine)
-        {
-            Debug.Log("Player instantiated successfully for this client.");
-        }
+        player = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), Vector3.zero, Quaternion.identity,0,new object[] {PV.ViewID});
     }
+
+    public void Die()
+    {
+        if (PV.IsMine) {
+            PhotonNetwork.Destroy(player);
+            CreateController();
+        }
+        
+    }
+        
 }
