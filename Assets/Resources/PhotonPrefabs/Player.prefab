@@ -2121,7 +2121,7 @@ GameObject:
   - component: {fileID: 4856692694972568379}
   - component: {fileID: 8253572161855189151}
   - component: {fileID: 1403655187269913451}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WeaponCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}

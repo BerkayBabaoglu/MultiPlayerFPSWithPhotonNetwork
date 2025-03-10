@@ -14,16 +14,14 @@ public class WeaponCameraCrouch : MonoBehaviour
 
     // Soldier2 için kamera pozisyonlarý
     private float soldier2DefaultLocalY = 1.208f;
-    private float soldier2CrouchLocalY = 0.316f;
-    private float soldier2DefaultLocalZ = 0.898f;
+    private float soldier2CrouchLocalY = 0.898f;
+    private float soldier2DefaultLocalZ = 0.316f;
     private float soldier2CrouchLocalZ = 0.00551f;
 
-    private string playerTag;
 
     void Start()
     {
-        // Oyuncunun tag'ini belirle
-        playerTag = gameObject.tag;
+        
     }
 
     void Update()
@@ -36,21 +34,23 @@ public class WeaponCameraCrouch : MonoBehaviour
         bool isCrouching = Input.GetKey(KeyCode.LeftShift);
         float targetY, targetZ;
 
-        // Eðer Soldier1 ise ona göre deðerleri kullan
-        if (playerTag == "Soldier1")
+
+        Debug.Log("Layer: " + this.gameObject.layer);
+
+        if (this.gameObject.layer == 7)
         {
+            Debug.Log("girdim");
             targetY = isCrouching ? soldier1CrouchLocalY : soldier1DefaultLocalY;
             targetZ = isCrouching ? soldier1CrouchLocalZ : soldier1DefaultLocalZ;
         }
-        // Eðer Soldier2 ise ona göre deðerleri kullan
-        else if (playerTag == "Soldier2")
+        else if (this.gameObject.layer == 8)
         {
             targetY = isCrouching ? soldier2CrouchLocalY : soldier2DefaultLocalY;
             targetZ = isCrouching ? soldier2CrouchLocalZ : soldier2DefaultLocalZ;
         }
         else
         {
-            return; // Tanýmsýz bir tag varsa çýk
+            return; 
         }
 
         Vector3 newLocalPosition = new Vector3(
@@ -59,7 +59,7 @@ public class WeaponCameraCrouch : MonoBehaviour
             targetZ
         );
 
-        // Kamera pozisyonunu yumuþak bir þekilde deðiþtir
+
         weaponCamera.localPosition = Vector3.Lerp(
             weaponCamera.localPosition,
             newLocalPosition,
