@@ -10,7 +10,7 @@ public class PanelControl : MonoBehaviourPunCallbacks
     {
         if (panel == null)
         {
-            panel = GameObject.Find("Panel"); // Panel GameObject'ini bul
+            panel = GameObject.Find("Panel"); 
             if (panel == null)
             {
                 Debug.LogError("Panel GameObject'ini bulamadým!");
@@ -18,7 +18,7 @@ public class PanelControl : MonoBehaviourPunCallbacks
             }
         }
 
-        panel.SetActive(false); // Baþlangýçta panel gizli olsun
+        panel.SetActive(false); 
         SetCursorState(false);
     }
 
