@@ -6497,6 +6497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockCursor: 1
+  chat: {fileID: 1166082942}
 --- !u!4 &1040709797
 Transform:
   m_ObjectHideFlags: 0
