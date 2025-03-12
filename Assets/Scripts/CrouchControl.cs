@@ -13,9 +13,9 @@ public class WeaponCameraCrouch : MonoBehaviour
     private float soldier1CrouchLocalZ = 0.00551f;
 
     // Soldier2 için kamera pozisyonlarý
-    private float soldier2DefaultLocalY = 1.208f;
+    private float soldier2DefaultLocalY = 1.347f;
     private float soldier2CrouchLocalY = 0.898f;
-    private float soldier2DefaultLocalZ = 0.316f;
+    private float soldier2DefaultLocalZ = 0.168f;
     private float soldier2CrouchLocalZ = 0.00551f;
 
 
