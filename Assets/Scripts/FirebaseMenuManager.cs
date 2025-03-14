@@ -8,8 +8,14 @@ public class FirebaseMenuManager : MonoBehaviour
     [SerializeField]
     List<GameObject> menus;
 
+    [SerializeField] GameObject mailpasswordpanel;
     int currentIndex;
 
+    PanelAnimator panelAnimator;
+    private void Awake()
+    {
+        panelAnimator = mailpasswordpanel.GetComponent<PanelAnimator>();
+    }
     void Start()
     {
         menus[0].SetActive(true);
@@ -75,14 +81,19 @@ public class FirebaseMenuManager : MonoBehaviour
 
     public void Login()
     {
-
+        EmailAuth.Instance.Login();
     }
 
     public void RegisterAndLogin()
     {
-        //register iþlemleri
+        
+        EmailAuth.Instance.SignUp();
 
-        Login();
+        EmailAuth.Instance.email.text = string.Empty;
+        EmailAuth.Instance.password.text = string.Empty;
+
+        panelAnimator.AnimatePanel();
+ 
     }
 
 
