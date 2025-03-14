@@ -12,7 +12,7 @@ public class EmailAuth : MonoBehaviour
 {
     FirebaseAuth auth;
 
-     public TMP_InputField email;
+    public TMP_InputField email;
     public TMP_InputField changeemail;
     public TMP_InputField password;
     public TMP_InputField newpassword;
@@ -23,9 +23,24 @@ public class EmailAuth : MonoBehaviour
 
     [SerializeField] GameObject passwordPopUpPanel;
     PanelAnimator panelAnimator;
+
+    private string idToken;
+    private float tokenExpirationTime;
+    private FirebaseUser user;
+
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+           
+            DontDestroyOnLoad(gameObject); // Sahne geçiþlerinde yok olma
+        }
+        else
+        {
+            Destroy(gameObject); // Birden fazla örnek oluþmasýný engelle
+        }
+        tokenExpirationTime = Time.time + 60;
     }
 
     void Start()
@@ -33,6 +48,20 @@ public class EmailAuth : MonoBehaviour
         auth = FirebaseAuth.DefaultInstance;
         panelAnimator = passwordPopUpPanel.GetComponent<PanelAnimator>();
         isFaultLogin = false;
+    }
+
+    void Update()
+    {
+        // Token süresini kontrol et
+        Debug.Log(Time.time); // oyun ilk baþlatýldýðý andan itibaren geçen süre
+        Debug.Log("token ex : " + tokenExpirationTime); // giriþ yapýldýktan sonra ile baþlangýçtan itibaren geçen sürenin toplamý
+        if (user != null && Time.time >= tokenExpirationTime)
+        {
+            Debug.Log("Token expired, logging out...");
+            Debug.Log("user : " + user);
+            Debug.Log(tokenExpirationTime);
+            Logout();
+        }
     }
 
     public void SignUp()
@@ -56,33 +85,71 @@ public class EmailAuth : MonoBehaviour
         });
     }
 
-    public void Login()
+    public async void Login()
     {
-        auth.SignInWithEmailAndPasswordAsync(email.text, password.text).ContinueWith(task =>
+        try
         {
-            if (task.IsCanceled)
-            {
-                Debug.LogError("SignInWithEmailAndPasswordAsync was canceled.");
-                return;
-            }
-            if (task.IsFaulted)
-            {
-                //Debug.LogError("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
-                Debug.Log("hata");
-                Debug.Log(email.text);
-                isFaultLogin = true;
-                return;
-            }
+            // Firebase giriþ iþlemini baþlat ve bekleyin
+            var task = await auth.SignInWithEmailAndPasswordAsync(email.text, password.text);
 
-            Firebase.Auth.AuthResult result = task.Result;
-            Debug.LogFormat("User signed in successfully: {0} ({1})",
-                result.User.DisplayName, result.User.UserId);
+            if (task != null)
+            {
+                Firebase.Auth.AuthResult result = task;
+                Debug.LogFormat("User signed in successfully: {0} ({1})",
+                    result.User.DisplayName, result.User.UserId);
 
-        });
-        if(isFaultLogin)
-        {
-            SceneManager.LoadScene("Lobby");
+                tokenExpirationTime = Time.time + 60;
+
+                // Kullanýcý oturumunu kaydet
+                user = result.User;
+
+                // Token al ve süresini ayarla
+                await GetIdToken();
+
+                if (!isFaultLogin)
+                {
+                    SceneManager.LoadScene("Lobby");
+                }
+            }
         }
+        catch (System.Exception ex)
+        {
+            panelAnimator.AnimatePanel();
+            Debug.Log("Login failed: " + ex.Message);
+            isFaultLogin = true;
+        }
+    }
+
+    private async Task GetIdToken()
+    {
+        if (user != null)
+        {
+            try
+            {
+                // Token al ve süresini ayarla
+                var tokenTask = await user.TokenAsync(true);
+                idToken = tokenTask;
+                tokenExpirationTime = Time.time + 60; // 1 dakika sonra token süresi dolacak
+                Debug.Log("Token received: " + idToken);
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError("Token retrieval failed: " + ex.Message);
+            }
+        }
+        else
+        {
+            Debug.LogError("No user is currently signed in.");
+        }
+    }
+
+    public void Logout()
+    {
+        auth.SignOut();
+        user = null;
+        idToken = null;
+        Debug.Log("User logged out.");
+        SceneManager.LoadScene("PlayerLogin");
     }
 
     public void ResetPassword()
@@ -108,10 +175,9 @@ public class EmailAuth : MonoBehaviour
         await auth.SendPasswordResetEmailAsync(emailAddress);
     }
 
-
     public void ChangeUserPassword()
     {
-        ChangePasswordAsync(changeemail.text,newpassword.text, currentPassword.text).ContinueWith(task => {
+        ChangePasswordAsync(changeemail.text, newpassword.text, currentPassword.text).ContinueWith(task => {
             if (task.IsCanceled)
             {
                 Debug.LogError("ChangePasswordAsync was canceled.");
@@ -129,16 +195,11 @@ public class EmailAuth : MonoBehaviour
 
     private async Task ChangePasswordAsync(string emailAddress, string newPassword, string currentPassword)
     {
-        // Mevcut kullanýcýyý al
-        //FirebaseUser user = await auth.SignInWithEmailAndPasswordAsync(emailAddress, currentPassword);
         AuthResult authResult = await auth.SignInWithEmailAndPasswordAsync(emailAddress, currentPassword);
-
-        // AuthResult içindeki FirebaseUser nesnesine eriþ
         FirebaseUser user = authResult.User;
 
         if (user != null)
         {
-            // Þifreyi güncelle
             await user.UpdatePasswordAsync(newPassword);
         }
         else
@@ -146,5 +207,4 @@ public class EmailAuth : MonoBehaviour
             Debug.LogError("No user is currently signed in.");
         }
     }
-
 }

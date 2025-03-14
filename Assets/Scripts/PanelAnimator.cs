@@ -23,6 +23,7 @@ public class PanelAnimator : MonoBehaviour
         {
             gameObject.SetActive(true);
         }
+        Debug.Log("geldi");
         // Panelin baþlangýçta küçük olmasýný saðla
         panelRectTransform.localScale = Vector2.zero;
 
