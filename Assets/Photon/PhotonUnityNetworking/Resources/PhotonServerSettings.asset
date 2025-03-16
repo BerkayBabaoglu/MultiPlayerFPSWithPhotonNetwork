@@ -44,6 +44,10 @@ MonoBehaviour:
   - SyncJumpAnimation
   - SyncJump
   - Shoot
+  - AddScore
+  - AddScoreRPC
+  - TakeDamage
+  - RPC_SetTeam
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.VFX;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 
 public class Gun : MonoBehaviourPunCallbacks
 {
@@ -24,7 +26,6 @@ public class Gun : MonoBehaviourPunCallbacks
     {
         muzzleFlashVFX.Stop();
         shootAudio = GetComponent<AudioSource>();
-
         shootAudio.Stop();
     }
 
@@ -34,24 +35,30 @@ public class Gun : MonoBehaviourPunCallbacks
         {
             if (Input.GetButtonDown("Fire1"))
             {
-                PV.RPC("Shoot", RpcTarget.All);
+                PV.RPC("Shoot", RpcTarget.All, PhotonNetwork.LocalPlayer);
             }
         }
     }
 
     [PunRPC]
-    void Shoot()
+    void Shoot(Player shooter)
     {
         StartCoroutine(PlayVFX());
 
         RaycastHit hit;
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
-            Debug.LogWarning("Merminin degdigi cisim: " + hit.transform.name);
+            Debug.LogWarning("Merminin değdiği cisim: " + hit.transform.name);
 
             Target target = hit.transform.GetComponent<Target>();
             if (target != null)
             {
+                if (!CanDamage(shooter, target.PV.Owner))
+                {
+                    Debug.Log("Friendly fire! Hasar verilmedi.");
+                    return;
+                }
+
                 target.TakeDamage(damage);
             }
 
@@ -60,14 +67,21 @@ public class Gun : MonoBehaviourPunCallbacks
         }
     }
 
+    bool CanDamage(Player shooter, Player target)
+    {
+        if (shooter == null || target == null) return true;
+
+        string shooterTeam = shooter.CustomProperties.ContainsKey("Team") ? (string)shooter.CustomProperties["Team"] : "None";
+        string targetTeam = target.CustomProperties.ContainsKey("Team") ? (string)target.CustomProperties["Team"] : "None";
+
+        return shooterTeam != targetTeam; // eger farkli takimdalarsa hasar ver
+    }
+
     IEnumerator PlayVFX()
     {
-        
         muzzleFlashVFX.Play();
         shootAudio.Play();
-
         yield return new WaitForSeconds(0.17f);
-
         muzzleFlashVFX.Stop();
     }
 }

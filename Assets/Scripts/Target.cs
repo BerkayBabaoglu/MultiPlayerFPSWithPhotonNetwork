@@ -7,8 +7,9 @@ public class Target : MonoBehaviourPunCallbacks
 {
     public float health = 100f;
 
+    public PhotonView PV; // public yapildi
+
     PlayerManager playerManager;
-    PhotonView PV;
 
     private void Awake()
     {
@@ -23,11 +24,10 @@ public class Target : MonoBehaviourPunCallbacks
             health -= amount;
             if (health <= 0f)
             {
-                Debug.Log("vuruldu: " + this.gameObject.name);
+                Debug.Log("Vuruldu: " + this.gameObject.name);
                 Die();
             }
         }
-        
     }
 
     void Die()

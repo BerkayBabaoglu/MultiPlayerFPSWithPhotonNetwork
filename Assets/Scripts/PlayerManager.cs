@@ -1,4 +1,6 @@
-using Photon.Pun;
+ï»¿using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon; // Custom properties iÃ§in gerekli
 using System.IO;
 using UnityEngine;
 
@@ -25,13 +27,17 @@ public class PlayerManager : MonoBehaviour
 
     public void SelectTeam(string team)
     {
-        Debug.Log("geldim anam geldim");
         if (PV.IsMine)
         {
-            Debug.Log("Takým seçildi: " + team);
             selectedTeam = team;
-            GameManager.Instance.teamSelectionPanel.SetActive(false);
 
+            
+            Hashtable hash = new Hashtable();// oyuncunun takim bilgisi CustomProperties ile saklandi, ise yaradi sonunda
+            hash["Team"] = team;
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+
+            Debug.Log("TakÄ±m seÃ§ildi: " + team);
+            GameManager.Instance.teamSelectionPanel.SetActive(false);
             CreateController();
         }
     }
@@ -40,24 +46,24 @@ public class PlayerManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(selectedTeam))
         {
-            Debug.LogError("Takým seçilmedi!");
+            Debug.LogError("TakÄ±m seÃ§ilmedi!");
             return;
         }
 
         Transform spawnPoint = GetSpawnPoint();
         if (spawnPoint == null)
         {
-            Debug.LogError("Spawn noktasý bulunamadý!");
+            Debug.LogError("Spawn noktasÄ± bulunamadÄ±!");
             return;
         }
 
         string prefabName = selectedTeam == "Red" ? "Player" : "Player2";
         player = PhotonNetwork.Instantiate(
-        Path.Combine("PhotonPrefabs", prefabName),
-        spawnPoint.position,
-        spawnPoint.rotation,
-        0,
-        new object[] { PV.ViewID }  // PlayerManager'in ViewID'sini gönderiyoruz
+            Path.Combine("PhotonPrefabs", prefabName),
+            spawnPoint.position,
+            spawnPoint.rotation,
+            0,
+            new object[] { PV.ViewID }
         );
     }
 
