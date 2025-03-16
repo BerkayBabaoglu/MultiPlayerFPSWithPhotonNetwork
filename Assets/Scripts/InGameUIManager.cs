@@ -38,6 +38,8 @@ public class InGameUIManager : MonoBehaviour
         redScoreText = GameObject.Find("RedScoreText").GetComponent<TextMeshProUGUI>();
         blueScoreText = GameObject.Find("BlueScoreText").GetComponent<TextMeshProUGUI>();
         timerText = GameObject.Find("TimerText").GetComponent<TextMeshProUGUI>();
+
+        StartCoroutine(StartCountdown(timerText));
     }
 
     public void UpdateScore(string team)
