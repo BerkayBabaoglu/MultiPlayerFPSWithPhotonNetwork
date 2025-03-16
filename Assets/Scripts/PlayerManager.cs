@@ -31,7 +31,7 @@ public class PlayerManager : MonoBehaviour
         {
             selectedTeam = team;
 
-            
+
             Hashtable hash = new Hashtable();// oyuncunun takim bilgisi CustomProperties ile saklandi, ise yaradi sonunda
             hash["Team"] = team;
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
@@ -73,7 +73,9 @@ public class PlayerManager : MonoBehaviour
         {
             PhotonNetwork.Destroy(player);
             CreateController();
+            
         }
+        
     }
 
     Transform GetSpawnPoint()
@@ -96,5 +98,10 @@ public class PlayerManager : MonoBehaviour
     public void SelectBlueTeam()
     {
         SelectTeam("Blue");
+    }
+
+    public string GetTeam()
+    {
+        return selectedTeam;
     }
 }

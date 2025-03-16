@@ -1,14 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using TMPro;
+using System.Collections;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager Instance;
-
+    
+    public GameObject teamSelectionPanel;
     public Transform[] redTeamSpawns;
     public Transform[] blueTeamSpawns;
-    public GameObject teamSelectionPanel;
+
 
     private void Awake()
     {
@@ -16,9 +18,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
+
+    
 }

@@ -48,6 +48,14 @@ MonoBehaviour:
   - AddScoreRPC
   - TakeDamage
   - RPC_SetTeam
+  - SyncHealht
+  - SyncScore
+  - SyncTimer
+  - UpdateHealth
+  - UpdateScore
+  - SyncHealth
+  - Die
+  - UpdateScore_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

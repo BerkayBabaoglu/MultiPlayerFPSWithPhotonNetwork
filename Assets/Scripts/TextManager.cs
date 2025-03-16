@@ -1,10 +1,15 @@
-using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 
 public class TextManager : MonoBehaviour
 {
     public static TextManager Instance;
 
+    public TextMeshProUGUI redScoreText;
+    public TextMeshProUGUI blueScoreText;
+    public TextMeshProUGUI timerText;
     public TextMeshProUGUI healthText;
 
     private void Awake()
@@ -18,13 +23,4 @@ public class TextManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    public void UpdateHealthText(float health)
-    {
-        if (healthText != null)
-        {
-            healthText.text = "Health: " + health.ToString();
-        }
-    }
 }
-
