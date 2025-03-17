@@ -20,7 +20,7 @@ public class InGameUIManager : MonoBehaviour
 
     private int redScore = 0;
     private int blueScore = 0;
-    private float gameTime = 600f; // 10 dakika (600 saniye)
+    private float gameTime = 60f; // 10 dakika (600 saniye)
     private float playerHealth = 100f; 
 
     private PhotonView PV;
@@ -79,13 +79,10 @@ public class InGameUIManager : MonoBehaviour
             gameTime--;
         }
 
-        EndGame();
+        GameManager.Instance.EndGame();
     }
 
-    private void EndGame()
-    {
-        Debug.Log("Oyun bitti!");
-        // oyun sounda kazandin kaybettin olacak.
-    }
 
+    public int GetBlueScore() { return blueScore; }
+    public int GetRedScore() { return redScore; }
 }

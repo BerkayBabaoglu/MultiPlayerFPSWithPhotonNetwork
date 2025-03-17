@@ -56,6 +56,7 @@ MonoBehaviour:
   - SyncHealth
   - Die
   - UpdateScore_RPC
+  - ShowResultsRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
