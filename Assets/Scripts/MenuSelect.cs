@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,8 +6,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class MenuSelect : MonoBehaviour, IPointerEnterHandler,IPointerExitHandler
+public class MenuSelect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public TMP_Text targetText;
     public AudioSource audio;
@@ -15,7 +17,7 @@ public class MenuSelect : MonoBehaviour, IPointerEnterHandler,IPointerExitHandle
 
     private void Start()
     {
-        if(targetText != null)
+        if (targetText != null)
         {
             originalColor = targetText.color; //baslangictaki rengi kaydet
         }
@@ -39,7 +41,7 @@ public class MenuSelect : MonoBehaviour, IPointerEnterHandler,IPointerExitHandle
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if(targetText != null)
+        if (targetText != null)
         {
             targetText.color = originalColor;
         }
@@ -51,4 +53,5 @@ public class MenuSelect : MonoBehaviour, IPointerEnterHandler,IPointerExitHandle
         }
 
     }
+
 }

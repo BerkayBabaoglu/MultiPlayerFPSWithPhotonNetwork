@@ -1,14 +1,18 @@
+
 using Photon.Pun;
+
 using UnityEngine;
 
 public class CharacterMovement : MonoBehaviourPunCallbacks
 {
     public float speed = 3f;
     public float jumpForce = 5f;
+    public float crouchSpeed = 2f;
     public Animator animator;
     private Rigidbody rb;
     private bool isGrounded;
     public AudioSource walkingSound;
+    private bool isCrouching = false;
 
     PhotonView PV;
 
@@ -41,34 +45,47 @@ public class CharacterMovement : MonoBehaviourPunCallbacks
 
     void Movement()
     {
-        bool isMoving = Input.GetKey(KeyCode.W);
 
-        if (isMoving)
+        float moveX = Input.GetAxis("Horizontal"); // A (-1) ve D (1)
+        float moveZ = Input.GetAxis("Vertical");   // W (1) ve S (-1)
+        bool isMoving = moveX != 0 || moveZ != 0;
+        bool isShift = Input.GetKey(KeyCode.LeftShift);
+
+        Vector3 moveDirection = transform.right * moveX + transform.forward * moveZ;
+        float currentSpeed = isShift ? crouchSpeed : speed;
+        rb.velocity = new Vector3(moveDirection.x * currentSpeed, rb.velocity.y, moveDirection.z * currentSpeed);
+
+        if (isMoving && !walkingSound.isPlaying)
         {
-            Vector3 moveDirection = transform.forward * speed;
-            rb.velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
+            walkingSound.Play();
+        }
+        else if (!isMoving && walkingSound.isPlaying)
+        {
+            walkingSound.Stop();
+        }
 
-            if (!walkingSound.isPlaying)
-            {
-                walkingSound.Play();
-            }
+        HandleAnimations(moveX, moveZ, isShift);
+    }
+
+    void HandleAnimations(float moveX, float moveZ, bool isShift)
+    {
+        string animationState = "Idle";
+
+        if (isShift)
+        {
+            walkingSound.Stop();
+            animationState = moveZ > 0 ? "CrouchForward" : moveZ < 0 ? "CrouchBackward" :
+                             moveX > 0 ? "CrouchRight" : moveX < 0 ? "CrouchLeft" : "CrouchIdle";
         }
         else
         {
-            rb.velocity = new Vector3(0, rb.velocity.y, 0);
-
-            if (walkingSound.isPlaying)
-            {
-                walkingSound.Stop();
-            }
+            animationState = moveZ > 0 ? "RunForward" : moveZ < 0 ? "WalkBackward" :
+                             moveX > 0 ? "WalkRight" : moveX < 0 ? "WalkLeft" : "Idle";
         }
 
-        if (PV.IsMine)
-        {
-            PV.RPC("SyncAnimation", RpcTarget.Others, isMoving);
-        }
+        animator.Play(animationState);
+        PV.RPC("SyncAnimation", RpcTarget.Others, animationState);
 
-        animator.SetBool("isRunning", isMoving);
     }
 
     void Update()
@@ -91,7 +108,9 @@ public class CharacterMovement : MonoBehaviourPunCallbacks
     void Jump()
     {
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        animator.SetBool("isJumping", true);
+
+        animator.Play("Jump");
+
         isGrounded = false;
         PV.RPC("SyncJumpAnimation", RpcTarget.Others, true);
     }
@@ -101,20 +120,28 @@ public class CharacterMovement : MonoBehaviourPunCallbacks
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
-            animator.SetBool("isJumping", false);
+
+            animator.Play("Idle");
+
             PV.RPC("SyncJumpAnimation", RpcTarget.Others, false);
         }
     }
 
     [PunRPC]
-    void SyncAnimation(bool isRunning) //animasyonlarý senkronize ederiz
+    void SyncAnimation(string animationState)
     {
-        animator.SetBool("isRunning", isRunning);
+        animator.Play(animationState);
+
     }
 
     [PunRPC]
     void SyncJumpAnimation(bool isJumping)
     {
-        animator.SetBool("isJumping", isJumping);
+
+        if (isJumping)
+            animator.Play("Jump");
+        else
+            animator.Play("Idle");
+
     }
 }

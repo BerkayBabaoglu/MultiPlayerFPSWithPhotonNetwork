@@ -16,8 +16,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
             Destroy(gameObject);
             return;
         }
+
         DontDestroyOnLoad(gameObject);
         Instance = this;
+
+        PhotonNetwork.AutomaticallySyncScene = false; 
     }
 
     public override void OnEnable()
@@ -34,10 +37,36 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.buildIndex == 2)  // oyun sahnesi
+
+        if (scene.buildIndex == 2)  
         {
             
+            foreach (var obj in GameObject.FindGameObjectsWithTag("Player"))
+            {
+                Destroy(obj);
+            }
+
+         
             PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
         }
     }
+
+    public override void OnLeftRoom()
+    {
+        Destroy(gameObject); 
+    }
+
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
+        Debug.Log("Bir oyuncu ayr�ld�: " + otherPlayer.NickName);
+
+        foreach (var obj in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            if (obj.GetComponent<PhotonView>().Owner == otherPlayer)
+            {
+                Destroy(obj);
+            }
+        }
+    }
+
 }

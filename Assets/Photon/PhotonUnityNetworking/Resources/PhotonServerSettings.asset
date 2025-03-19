@@ -39,9 +39,26 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
-  - Shoot
+
   - SyncAnimation
+  - SyncCrouchAnimation
   - SyncJumpAnimation
+  - SyncJump
+  - Shoot
+  - AddScore
+  - AddScoreRPC
+  - TakeDamage
+  - RPC_SetTeam
+  - SyncHealht
+  - SyncScore
+  - SyncTimer
+  - UpdateHealth
+  - UpdateScore
+  - SyncHealth
+  - Die
+  - UpdateScore_RPC
+  - ShowResultsRPC
+
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

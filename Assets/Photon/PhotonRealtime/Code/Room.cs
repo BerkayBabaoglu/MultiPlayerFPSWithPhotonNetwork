@@ -629,5 +629,10 @@ namespace Photon.Realtime
         {
             return string.Format("Room: '{0}' {1},{2} {4}/{3} players.\ncustomProps: {5}", this.name, this.isVisible ? "visible" : "hidden", this.isOpen ? "open" : "closed", this.maxPlayers, this.PlayerCount, this.CustomProperties.ToStringFull());
         }
+
+        public void SetCustomProperties(System.Collections.Hashtable roomProperties)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

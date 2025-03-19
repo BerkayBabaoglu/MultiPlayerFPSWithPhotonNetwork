@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Soldier1
+  - Soldier2
   layers:
   - Default
   - TransparentFX
@@ -14,8 +16,8 @@ TagManager:
   - UI
   - Weapon
   - Soldier
-  - 
-  - 
+  - Soldier2
+  - PlayerManager
   - 
   - 
   - 
