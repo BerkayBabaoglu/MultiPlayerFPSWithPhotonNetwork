@@ -1,6 +1,8 @@
-﻿using Photon.Pun;
+
+using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon; // Custom properties için gerekli
+
 using System.IO;
 using UnityEngine;
 
@@ -9,7 +11,9 @@ public class PlayerManager : MonoBehaviour
     PhotonView PV;
     GameObject player;
 
+
     private string selectedTeam = "";
+
 
     void Awake()
     {
@@ -68,8 +72,9 @@ public class PlayerManager : MonoBehaviour
     }
 
     public void Die()
+
     {
-        if (PV.IsMine)
+        if (PV.IsMine)  
         {
             PhotonNetwork.Destroy(player);
             CreateController();
@@ -103,5 +108,6 @@ public class PlayerManager : MonoBehaviour
     public string GetTeam()
     {
         return selectedTeam;
+
     }
 }

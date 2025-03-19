@@ -1,4 +1,6 @@
-﻿using Photon.Pun;
+
+using Photon.Pun;
+
 using UnityEngine;
 
 public class CharacterMovement : MonoBehaviourPunCallbacks
@@ -43,6 +45,7 @@ public class CharacterMovement : MonoBehaviourPunCallbacks
 
     void Movement()
     {
+
         float moveX = Input.GetAxis("Horizontal"); // A (-1) ve D (1)
         float moveZ = Input.GetAxis("Vertical");   // W (1) ve S (-1)
         bool isMoving = moveX != 0 || moveZ != 0;
@@ -82,6 +85,7 @@ public class CharacterMovement : MonoBehaviourPunCallbacks
 
         animator.Play(animationState);
         PV.RPC("SyncAnimation", RpcTarget.Others, animationState);
+
     }
 
     void Update()
@@ -104,7 +108,9 @@ public class CharacterMovement : MonoBehaviourPunCallbacks
     void Jump()
     {
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+
         animator.Play("Jump");
+
         isGrounded = false;
         PV.RPC("SyncJumpAnimation", RpcTarget.Others, true);
     }
@@ -114,7 +120,9 @@ public class CharacterMovement : MonoBehaviourPunCallbacks
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+
             animator.Play("Idle");
+
             PV.RPC("SyncJumpAnimation", RpcTarget.Others, false);
         }
     }
@@ -123,14 +131,17 @@ public class CharacterMovement : MonoBehaviourPunCallbacks
     void SyncAnimation(string animationState)
     {
         animator.Play(animationState);
+
     }
 
     [PunRPC]
     void SyncJumpAnimation(bool isJumping)
     {
+
         if (isJumping)
             animator.Play("Jump");
         else
             animator.Play("Idle");
+
     }
 }

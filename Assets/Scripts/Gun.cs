@@ -1,4 +1,6 @@
-﻿using Photon.Pun;
+
+using Photon.Pun;
+
 using System.Collections;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -11,7 +13,9 @@ public class Gun : MonoBehaviourPunCallbacks
     public float range = 100f;
 
     public Camera fpsCam;
+
     public VisualEffect muzzleFlashVFX;
+
     public VisualEffect impactEffect;
     public AudioSource shootAudio;
 
@@ -31,24 +35,29 @@ public class Gun : MonoBehaviourPunCallbacks
 
     void Update()
     {
+
         if (PV.IsMine)
         {
             if (Input.GetButtonDown("Fire1"))
             {
                 PV.RPC("Shoot", RpcTarget.All, PhotonNetwork.LocalPlayer);
+
             }
         }
     }
 
     [PunRPC]
     void Shoot(Player shooter)
+
     {
         StartCoroutine(PlayVFX());
 
         RaycastHit hit;
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
-            Debug.LogWarning("Merminin değdiği cisim: " + hit.transform.name);
+
+            Debug.LogWarning("Merminin deÄdiÄi cisim: " + hit.transform.name);
+
 
             Target target = hit.transform.GetComponent<Target>();
             if (target != null)
@@ -67,6 +76,7 @@ public class Gun : MonoBehaviourPunCallbacks
         }
     }
 
+
     bool CanDamage(Player shooter, Player target)
     {
         if (shooter == null || target == null) return true;
@@ -76,6 +86,7 @@ public class Gun : MonoBehaviourPunCallbacks
 
         return shooterTeam != targetTeam; // eger farkli takimdalarsa hasar ver
     }
+
 
     IEnumerator PlayVFX()
     {

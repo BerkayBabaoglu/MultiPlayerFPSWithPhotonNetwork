@@ -37,6 +37,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+
         if (scene.buildIndex == 2)  
         {
             
@@ -57,7 +58,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
-        Debug.Log("Bir oyuncu ayrýldý: " + otherPlayer.NickName);
+        Debug.Log("Bir oyuncu ayrï¿½ldï¿½: " + otherPlayer.NickName);
 
         foreach (var obj in GameObject.FindGameObjectsWithTag("Player"))
         {
@@ -67,4 +68,5 @@ public class RoomManager : MonoBehaviourPunCallbacks
             }
         }
     }
+
 }
