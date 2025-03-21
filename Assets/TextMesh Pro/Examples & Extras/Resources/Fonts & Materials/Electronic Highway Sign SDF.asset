@@ -150,19 +150,23 @@ MonoBehaviour:
     m_StrikethroughOffset: 46
     m_StrikethroughThickness: 2.0571427
     m_TabWidth: 88
+
   m_GlyphTable: []
   m_CharacterTable: []
+
   m_AtlasTextures:
   - {fileID: 28981121099961358}
   m_AtlasTextureIndex: 0
   m_IsMultiAtlasTexturesEnabled: 0
   m_ClearDynamicDataOnBuild: 1
+
   m_UsedGlyphRects: []
   m_FreeGlyphRects:
   - m_X: 0
     m_Y: 0
     m_Width: 1023
     m_Height: 1023
+
   m_fontInfo:
     Name: Electronic Highway Sign
     PointSize: 144
@@ -303,8 +307,10 @@ Texture2D:
   m_LightmapFormat: 0
   m_ColorSpace: 0
   m_PlatformBlob: 
+
   image data: 0
   _typelessdata: 
+
   m_StreamData:
     serializedVersion: 2
     offset: 0
