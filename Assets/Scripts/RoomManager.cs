@@ -38,7 +38,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
 
-        if (scene.buildIndex == 2)  
+        if (scene.buildIndex == 3)  
         {
             
             foreach (var obj in GameObject.FindGameObjectsWithTag("Player"))

@@ -24,8 +24,8 @@ public class EmailAuth : MonoBehaviour
     [SerializeField] GameObject passwordPopUpPanel;
     PanelAnimator panelAnimator;
 
-    private string idToken;
-    private float tokenExpirationTime;
+    public string idToken;
+    //private float tokenExpirationTime;
     private FirebaseUser user;
 
     private void Awake()
@@ -40,7 +40,7 @@ public class EmailAuth : MonoBehaviour
         {
             Destroy(gameObject); // Birden fazla örnek oluþmasýný engelle
         }
-        tokenExpirationTime = Time.time + 60;
+        //tokenExpirationTime = Time.time + 60;
     }
 
     void Start()
@@ -54,14 +54,14 @@ public class EmailAuth : MonoBehaviour
     {
         // Token süresini kontrol et
         Debug.Log(Time.time); // oyun ilk baþlatýldýðý andan itibaren geçen süre
-        Debug.Log("token ex : " + tokenExpirationTime); // giriþ yapýldýktan sonra ile baþlangýçtan itibaren geçen sürenin toplamý
-        if (user != null && Time.time >= tokenExpirationTime)
-        {
-            Debug.Log("Token expired, logging out...");
-            Debug.Log("user : " + user);
-            Debug.Log(tokenExpirationTime);
-            Logout();
-        }
+        //Debug.Log("token ex : " + tokenExpirationTime); // giriþ yapýldýktan sonra ile baþlangýçtan itibaren geçen sürenin toplamý
+        //if (user != null && Time.time >= tokenExpirationTime)
+        //{
+        //    Debug.Log("Token expired, logging out...");
+        //    Debug.Log("user : " + user);
+        //    Debug.Log(tokenExpirationTime);
+        //    Logout();
+        //}
     }
 
     public void SignUp()
@@ -98,7 +98,7 @@ public class EmailAuth : MonoBehaviour
                 Debug.LogFormat("User signed in successfully: {0} ({1})",
                     result.User.DisplayName, result.User.UserId);
 
-                tokenExpirationTime = Time.time + 60;
+                //tokenExpirationTime = Time.time + 60;
 
                 // Kullanýcý oturumunu kaydet
                 user = result.User;
@@ -108,7 +108,7 @@ public class EmailAuth : MonoBehaviour
 
                 if (!isFaultLogin)
                 {
-                    SceneManager.LoadScene("Lobby");
+                    SceneManager.LoadScene(1);
                 }
             }
         }
@@ -129,8 +129,8 @@ public class EmailAuth : MonoBehaviour
                 // Token al ve süresini ayarla
                 var tokenTask = await user.TokenAsync(true);
                 idToken = tokenTask;
-                tokenExpirationTime = Time.time + 60; // 1 dakika sonra token süresi dolacak
-                Debug.Log("Token received: " + idToken);
+                //tokenExpirationTime = Time.time + 60; // 1 dakika sonra token süresi dolacak
+                Debug.LogWarning("Token received: " + idToken);
             }
             catch (System.Exception ex)
             {

@@ -92,7 +92,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        PhotonNetwork.LoadLevel(2);
+        PhotonNetwork.LoadLevel(3);
     }
 
     public void LeaveRoom()

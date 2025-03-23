@@ -7,16 +7,22 @@ public class StartGame : MonoBehaviour
 {
     public void LoadScene()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     public void QuitGame()
     {
+        if(EmailAuth.Instance != null)
+        {
+            EmailAuth.Instance.Logout();
+            Debug.LogWarning("Token silindi: "+ EmailAuth.Instance.idToken);
+        }
+
         Application.Quit();
     }
 
     public void Back()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 }
