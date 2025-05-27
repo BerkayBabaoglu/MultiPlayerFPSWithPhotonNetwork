@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private const byte ShowResultsEventCode = 1;
 
 
-    private void Awake()
+    public void Awake()
     {
         if (Instance == null)
         {
@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private void Start()
+    public void Start()
     {
         if (InGameUIManager.Instance != null)
         {

@@ -10,12 +10,12 @@ public class TeamSelectionUI : MonoBehaviour
 
     private void Start()
     {
-        // Sahnedeki tüm PlayerManager nesnelerini bul
+        // Sahnedeki tï¿½m PlayerManager nesnelerini bul
         PlayerManager[] allPlayerManagers = FindObjectsOfType<PlayerManager>();
 
         foreach (var pm in allPlayerManagers)
         {
-            // Eðer bu PlayerManager bana aitse, onu kullan
+            // Eï¿½er bu PlayerManager bana aitse, onu kullan
             if (pm.GetComponent<PhotonView>().IsMine)
             {
                 playerManager = pm;
@@ -25,13 +25,13 @@ public class TeamSelectionUI : MonoBehaviour
 
         if (playerManager != null)
         {
-            // Butonlarý kendi PlayerManager'ýmýz ile baðla
+            // Butonlarï¿½ kendi PlayerManager'ï¿½mï¿½z ile baï¿½la
             redTeamButton.onClick.AddListener(playerManager.SelectRedTeam);
             blueTeamButton.onClick.AddListener(playerManager.SelectBlueTeam);
         }
         else
         {
-            Debug.LogError("Kendi PlayerManager nesnem bulunamadý!");
+            Debug.LogError("Kendi PlayerManager nesnem bulunamadï¿½!");
         }
     }
 }

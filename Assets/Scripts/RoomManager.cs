@@ -11,7 +11,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        if (Instance)
+        if (Instance) //eger Instance zaten varsa, yeni bir nesne olusturulmaz. Singleton
         {
             Destroy(gameObject);
             return;
@@ -23,42 +23,39 @@ public class RoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = false; 
     }
 
-    public override void OnEnable()
+    public override void OnEnable() //sahne degisikliklerinde kullanilir.
     {
         base.OnEnable();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    public override void OnDisable()
+    public override void OnDisable() //sahne degisikliklerinde kullanilir.
     {
         base.OnDisable();
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode) //sahne yuklendiginde cagrilir.
     {
 
         if (scene.buildIndex == 3)  
         {
-            
-            foreach (var obj in GameObject.FindGameObjectsWithTag("Player"))
+            foreach (var obj in GameObject.FindGameObjectsWithTag("Player")) //eger sahnede onceden Player varsa silinir. Bu sayede ağa dogru bir sekilde baglanilir.
             {
                 Destroy(obj);
             }
-
-         
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerManager"), Vector3.zero, Quaternion.identity); //yeni bir PlayerManager prefab'i olusturur ve bunu Photon aginda baslatir.
         }
     }
 
-    public override void OnLeftRoom()
+    public override void OnLeftRoom() //oyuncu odadan ciktiktan sonra o odanin bilgileri oyuncudan silinir.
     {
         Destroy(gameObject); 
     }
 
-    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer) //
     {
-        Debug.Log("Bir oyuncu ayr�ld�: " + otherPlayer.NickName);
+        Debug.Log("Bir oyuncu ayrildi: " + otherPlayer.NickName);
 
         foreach (var obj in GameObject.FindGameObjectsWithTag("Player"))
         {
@@ -68,5 +65,4 @@ public class RoomManager : MonoBehaviourPunCallbacks
             }
         }
     }
-
 }
